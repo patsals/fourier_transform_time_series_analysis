@@ -1,10 +1,10 @@
+<!-- https://svelte.dev/repl/3ad4a548a4c442b69f20c25021ac8fbf?version=4.1.0 -->
 <script>
     import * as d3 from "d3";
-    
+
     export let data;
     
     // Receive plot data as prop.
-    
     // The chart dimensions and margins as optional props.
     export let width = 928;
     export let height = 500;
@@ -111,3 +111,4 @@
   
     <path fill="none" stroke="steelblue" stroke-width="1.5" d={line(data)} />
   </svg>
+  

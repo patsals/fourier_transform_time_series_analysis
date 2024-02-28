@@ -35,7 +35,7 @@
         {#if sectionIndex === 0}
           <Introduction />
         {:else if sectionIndex === 1}
-          <Temp {data} />
+          <Temp {data}/>
         {:else if sectionIndex === 2}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
@@ -52,45 +52,11 @@
   </div>
 </Scroller>
 
+
+
+
+
 <style>
   @import '../styles.css'; 
 
-  .background {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    outline: green solid 3px;
-  }
-
-  .foreground {
-    width: 50%;
-    margin: 0 auto;
-    height: auto;
-    position: relative;
-    outline: red solid 3px;
-  }
-
-  .progress-bars {
-    position: absolute;
-    background: rgba(170, 51, 120, 0.2);
-    visibility: visible;
-  }
-
-  section {
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
-    outline: magenta solid 3px;
-    text-align: center;
-    max-width: 1000px;
-    color: black;
-    padding: 1em;
-    margin: 0 0 2em 0;
-    opacity: 0;
-    transition: opacity 0.9s ease-in-out;
-  }
-
-  /* Use fade-in class to animate opacity on scroll */
-  .fade-in {
-    opacity: 1;
-  }
 </style>

@@ -6,6 +6,40 @@ body {
   font-family: 'DM Sans', Times, serif;
 }
 
-/* Add other global styles here */
+.background {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  outline: green solid 3px;
+}
 
+.foreground {
+  width: 75%;
+  margin: 0 auto;
+  height: auto;
+  position: relative;
+  outline: red solid 3px;
+}
 
+.progress-bars {
+  position: absolute;
+  background: rgba(170, 51, 120, 0.2);
+  visibility: visible;
+}
+
+section {
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: magenta solid 3px;
+  text-align: center;
+  color: black;
+  /* padding: 1em;
+  margin: 0 0 2em 0; */
+  opacity: 0; 
+  transition: opacity 0.9s ease-in-out;
+}
+
+/* Use fade-in class to animate opacity on scroll */
+.fade-in {
+  opacity: 1;
+}
