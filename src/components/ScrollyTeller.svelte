@@ -1,7 +1,12 @@
 <script>
-import Scroller from '@sveltejs/svelte-scroller';
+  import Scroller from '@sveltejs/svelte-scroller';
+  import Introduction from './Introduction.svelte';
+  
+  let count, index, fadeIn;
 
-  let count, index, offset, progress;
+  $: {
+    fadeIn = Array.from({ length: count }, (_, i) => index === i);
+  }
 </script>
 
 <Scroller
@@ -10,34 +15,46 @@ import Scroller from '@sveltejs/svelte-scroller';
   threshold={0.5}
   bind:count
   bind:index
-  bind:offset
-  bind:progress
 >
-
   <div class="background" slot="background">
-
     <div class="progress-bars">
       <p>current section: <strong>{index + 1}/{count}</strong></p>
       <progress value={count ? (index + 1) / count : 0} />
 
-      <p>offset in current section</p>
-      <progress value={offset || 0} />
-
       <p>total progress</p>
-      <progress value={progress || 0} />
+      <progress value={index / (count - 1) || 0} />
     </div>
   </div>
 
   <div class="foreground" slot="foreground">
-    <section>This is the first section.</section>
-    <section>This is the second section.</section>
-    <section>This is the third section.</section>
+    {#each Array(4) as _, sectionIndex}
+      <section class:fade-in={fadeIn[sectionIndex]}>
+        {#if sectionIndex === 0}
+          <Introduction />
+        {:else if sectionIndex === 1}
+          <div>
+            <h1>Section {sectionIndex + 1}</h1>
+            <p>This is some content within Section {sectionIndex + 1}.</p>
+          </div>
+        {:else if sectionIndex === 2}
+        <div>
+          <h1>Section {sectionIndex + 1}</h1>
+          <p>This is some content within Section {sectionIndex + 1}.</p>
+        </div>
+        {:else if sectionIndex === 3}
+        <div>
+          <h1>Section {sectionIndex + 1}</h1>
+          <p>This is some content within Section {sectionIndex + 1}.</p>
+        </div>
+        {/if}
+      </section>
+    {/each}
   </div>
 </Scroller>
 
-
-
 <style>
+  @import '../styles.css'; 
+
   .background {
     width: 100%;
     height: 100vh;
@@ -55,19 +72,25 @@ import Scroller from '@sveltejs/svelte-scroller';
 
   .progress-bars {
     position: absolute;
-    background: rgba(170, 51, 120, 0.2) /*  40% opaque */;
+    background: rgba(170, 51, 120, 0.2);
     visibility: visible;
   }
 
   section {
-    height: 80vh;
-    background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
-    /* color: white; */
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
     outline: magenta solid 3px;
     text-align: center;
-    max-width: 750px; /* adjust at will */
+    max-width: 1000px;
     color: black;
     padding: 1em;
     margin: 0 0 2em 0;
+    opacity: 0;
+    transition: opacity 0.9s ease-in-out;
+  }
+
+  /* Use fade-in class to animate opacity on scroll */
+  .fade-in {
+    opacity: 1;
   }
 </style>
