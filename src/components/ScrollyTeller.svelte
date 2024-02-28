@@ -1,7 +1,10 @@
 <script>
   import Scroller from '@sveltejs/svelte-scroller';
   import Introduction from './Introduction.svelte';
-  
+  import Temp from './Temp.svelte';
+  import data from "./data.json";
+
+
   let count, index, fadeIn;
 
   $: {
@@ -32,10 +35,7 @@
         {#if sectionIndex === 0}
           <Introduction />
         {:else if sectionIndex === 1}
-          <div>
-            <h1>Section {sectionIndex + 1}</h1>
-            <p>This is some content within Section {sectionIndex + 1}.</p>
-          </div>
+          <Temp {data} />
         {:else if sectionIndex === 2}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
