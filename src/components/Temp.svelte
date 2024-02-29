@@ -1,7 +1,6 @@
 <!-- https://svelte.dev/repl/3ad4a548a4c442b69f20c25021ac8fbf?version=4.1.0 -->
 <script>
   import * as d3 from "d3";
-  import { fft } from 'fft-js';
 
   export let data;
   export let width = 928;
@@ -11,11 +10,6 @@
   export let marginBottom = 30;
   export let marginLeft = 40;
 
-  // const signal = [[1, 1], [2, 1], [3, 1], [4, 1], [3, 1], [2, 1], [1, 1]];
-
-  // const result = fft(signal);
-  // console.log(result);
-  
   const xScale = d3.scaleUtc(
     d3.extent(data, (d) => new Date(d.date)),
     [marginLeft, width - marginRight]
