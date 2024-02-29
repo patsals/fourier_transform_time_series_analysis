@@ -1,6 +1,6 @@
 <script>
     import * as d3 from 'd3';
-  
+    import { onMount } from 'svelte';
     export let time = []; // Assuming these are initialized with some data
     export let signal = []; // Assuming these are initialized with some data
   
@@ -29,8 +29,10 @@
         .range([height - marginBottom, marginTop]);
     }
   
-    // Initialize scales when component is created
-    $: initializeScales();
+    // Initialize scales when component is created or when data changes
+    $: {
+      initializeScales();
+    }
   
     const line = d3
       .line()
@@ -159,4 +161,8 @@
       </g>
     {/if}
   </svg>
+  
+  <main>
+    <p> {data[10].close}</p>
+  </main>
   

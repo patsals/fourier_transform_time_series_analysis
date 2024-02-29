@@ -22,6 +22,7 @@
     let time = [];
     let signal = [];
     let signalComponents = [];
+  
 
     // initialize our time array
     for (let i = 0; i <= numPoints; i++) {
@@ -31,9 +32,11 @@
     // initialize our signal components
     for (let i = 0; i < numPoints; i++) {
         let row = [];
+        let coeff = Math.random();
         for (let j = 0; j < numColumns; j++) {
             // Set the first column to the desired value, and others to 0
-            row.push(j === 0 ? Math.random() * Math.cos(i * interval) : 0);
+            row.push(j === 0 ? Math.cos(i * interval) : 0);
+           // row.push(j === 0 ? 1: 0)
         }
         signalComponents.push(row);
     }
@@ -50,11 +53,12 @@
     if (counter < 10) {
         counter += 1;
         let temp = Math.random();
+        let coeff = Math.random();
         for (let i = 0; i < signalComponents.length; i++){
             if (temp > 0.5){
-                signalComponents[i][counter - 1] = Math.random() * Math.cos(i * interval);
+                signalComponents[i][counter - 1] = coeff * Math.cos(i * interval);
             }else{
-                signalComponents[i][counter - 1] = Math.random() * Math.sin(i * interval);
+                signalComponents[i][counter - 1] = coeff * Math.sin(i * interval);
             }
                 
         }

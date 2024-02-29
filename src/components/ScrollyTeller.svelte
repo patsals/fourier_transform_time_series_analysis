@@ -36,9 +36,10 @@
         {#if sectionIndex === 0}
           <Introduction />
         {:else if sectionIndex === 1}
-          <Temp {data}/>
-        {:else if sectionIndex === 2}
           <Fftvisualizer />
+          
+        {:else if sectionIndex === 2}
+          <Temp {data}/>
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
