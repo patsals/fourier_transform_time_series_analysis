@@ -2,6 +2,7 @@
   import Scroller from '@sveltejs/svelte-scroller';
   import Introduction from './Introduction.svelte';
   import Temp from './Temp.svelte';
+  import Fftvisualizer from './fftvisualizer.svelte';
   import data from "./data.json";
 
 
@@ -37,10 +38,7 @@
         {:else if sectionIndex === 1}
           <Temp {data}/>
         {:else if sectionIndex === 2}
-        <div>
-          <h1>Section {sectionIndex + 1}</h1>
-          <p>This is some content within Section {sectionIndex + 1}.</p>
-        </div>
+          <Fftvisualizer />
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
