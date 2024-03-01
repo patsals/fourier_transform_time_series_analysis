@@ -22,7 +22,7 @@
     let time = [];
     let signal = [];
     let signalComponents = [];
-  
+    
 
     // initialize our time array
     for (let i = 0; i <= numPoints; i++) {

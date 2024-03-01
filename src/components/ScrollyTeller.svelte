@@ -4,6 +4,7 @@
   import Temp from './Temp.svelte';
   import Fftvisualizer from './fftvisualizer.svelte';
   import data from "./data.json";
+  import FFTSignalTransformer from './FFTSignalTransformer.svelte';
 
 
   let count, index, fadeIn;
@@ -36,10 +37,10 @@
         {#if sectionIndex === 0}
           <Introduction />
         {:else if sectionIndex === 1}
-          <Fftvisualizer />
+          <FFTSignalTransformer />
           
         {:else if sectionIndex === 2}
-          <Temp {data}/>
+          <h1>hello</h1>
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>

@@ -1,11 +1,12 @@
 <script>
     import * as d3 from 'd3';
-    import { onMount } from 'svelte';
+    import { onMount, afterUpdate  } from 'svelte';
     export let time = []; // Assuming these are initialized with some data
     export let signal = []; // Assuming these are initialized with some data
   
-    let data = time.map((t, index) => ({ date: t, close: signal[index] })); // Create data array of objects
-  
+     let data = time.map((t, index) => ({ time: t, signal: signal[index] })); // Create data array of objects
+    //let data = [];
+
     let width = 928;
     let height = 500;
     let marginTop = 20;
@@ -28,16 +29,28 @@
         .domain([d3.min(signal), d3.max(signal)])
         .range([height - marginBottom, marginTop]);
     }
-  
     // Initialize scales when component is created or when data changes
     $: {
       initializeScales();
     }
+
+    //   // Initialize scales when component is created
+    // onMount(() => {
+    //     initializeScales();
+    // });
+
+    // // Reinitialize scales when data changes
+    // afterUptime(() => {
+    //     initializeScales();
+    //     // Uptime the 'data' array based on 'time' and 'signal'
+    //     data = time.map((t, index) => ({ time: t, signal: signal[index] }));
+    // });
+
   
     const line = d3
       .line()
-      .x((d) => xScale(d.date))
-      .y((d) => yScale(d.close));
+      .x((d) => xScale(d.time))
+      .y((d) => yScale(d.signal));
   
     function showTooltip(event) {
       const [x, y] = d3.pointer(event);
@@ -49,7 +62,7 @@
           visible: true,
           x: x,
           y: y,
-          content: `${nearestDataPoint.close.toFixed(2)}`,
+          content: `${nearestDataPoint.signal.toFixed(2)}`,
         };
       }
     }
@@ -63,8 +76,8 @@
       let nearestDataPoint = null;
   
       data.forEach((d) => {
-        const xPos = xScale(d.date);
-        const yPos = yScale(d.close);
+        const xPos = xScale(d.time);
+        const yPos = yScale(d.signal);
         const distance = Math.sqrt((x - xPos) ** 2 + (y - yPos) ** 2);
   
         if (distance < minDistance) {
@@ -163,6 +176,7 @@
   </svg>
   
   <main>
-    <p> {data[10].close}</p>
+    
+    <p> {data[10].signal}</p>
   </main>
   
