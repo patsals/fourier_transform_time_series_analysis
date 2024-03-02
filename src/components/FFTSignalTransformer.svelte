@@ -1,7 +1,7 @@
 <script>
   import * as d3 from 'd3';
   import { writable } from 'svelte/store';
-  import FFT from 'fft.js';
+  import fft from 'fft-js';
 
   let counter = 1;
 
@@ -13,9 +13,12 @@
   let signal = [];
   let signalComponents = [];
 
-  const f = new FFT(numPoints);
+  let magnitudes = [];
+  let FFTresult = [];
+  
+  // const f = new FFT(numPoints);
 
-  const out = f.createComplexArray();
+  // const out = f.createComplexArray();
 
   // initialize our time array
   for (let i = 0; i <= numPoints; i++) {
@@ -38,7 +41,8 @@
     for (let i = 0; i < signalComponents.length; i++) {
       signal[i] = signalComponents[i].reduce((acc, val) => acc + val, 0);
     }
-    f.realTransform(out, signal);
+    FFTresult = fft.fft(signal)
+    magnitudes = FFTresult.map((value) => Math.sqrt(value[0] ** 2 + value[1] ** 2)/numPoints);
   }
 
   function increment() {
@@ -77,13 +81,17 @@
 
   // Create a writable store to hold the data
   let dataStoreSignal = writable([]);
-  let dataStoreFFT = writable([]);
+  let dataStoreFFTMagnitudes = writable([]);
 
   $: {
     // Recreate the data array whenever signal or time changes
     dataStoreSignal.set(time.map((t, index) => ({ time: t, signal: signal[index] })));
-    dataStoreFFT.set(time.map((t, index) => ({ time: t, signal: out[index] })));
+    dataStoreFFTMagnitudes.set(time.slice(0, time.length / 2).map((t, index) => ({ time: t, signal: 2*magnitudes[index] })));
   }
+
+
+
+
 
   // Define width, height, etc.
   let width = 928;
@@ -160,10 +168,6 @@
 </script>
 
 <main>
-  <h1>Svelte User Input</h1>
-
-  <h1>Add waves</h1>
-  
   <p>Number of Random Waves: {counter} <button on:click={increment}>+</button> <button on:click={decrement}>-</button></p>
 
   
@@ -325,7 +329,7 @@
       fill="none"
       stroke="steelblue"
       stroke-width="2"
-      d={line($dataStoreFFT)}
+      d={line($dataStoreFFTMagnitudes)}
       aria-hidden="true"
     />
 

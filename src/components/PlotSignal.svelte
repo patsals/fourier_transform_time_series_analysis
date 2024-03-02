@@ -1,95 +1,106 @@
 <script>
     import * as d3 from 'd3';
     import { onMount, afterUpdate  } from 'svelte';
-    export let time = []; // Assuming these are initialized with some data
-    export let signal = []; // Assuming these are initialized with some data
-  
-     let data = time.map((t, index) => ({ time: t, signal: signal[index] })); // Create data array of objects
-    //let data = [];
+    import { writable } from 'svelte/store';
+    //export let time; // Assuming these are initialized with some data
+    //export let signal; // Assuming these are initialized with some data
+    export let dataStoreSignal;
 
+    // let data = time.map((t, index) => ({ time: t, signal: signal[index] })); // Create data array of objects
+    //let data = []; 
+    // console.log(dataStoreSignal);
+    let time = [];
+    let signal = [];
+
+    // dataStoreSignal.subscribe(data => { 
+    //     // console.log('Data has changed');
+    //     // localDataStoreSignal.set([data])
+
+    // });
+
+    dataStoreSignal.subscribe(data => {
+        // Update local time and signal arrays
+        time = data.map(d => d.time);
+        signal = data.map(d => d.signal);
+
+  });
+    
+    // Define width, height, etc.
     let width = 928;
     let height = 500;
     let marginTop = 20;
     let marginRight = 30;
     let marginBottom = 30;
     let marginLeft = 40;
-  
+
     let xScale;
     let yScale;
-  
+
     let tooltip = null;
-  
-    // Function to initialize scales
-    function initializeScales() {
-      xScale = d3.scaleLinear()
-        .domain([d3.min(time), d3.max(time)])
-        .range([marginLeft, width - marginRight]);
-  
-      yScale = d3.scaleLinear()
-        .domain([d3.min(signal), d3.max(signal)])
-        .range([height - marginBottom, marginTop]);
-    }
-    // Initialize scales when component is created or when data changes
-    $: {
-      initializeScales();
-    }
 
-    //   // Initialize scales when component is created
-    // onMount(() => {
-    //     initializeScales();
-    // });
+  // Function to initialize scales
+  function initializeScales() {
+    xScale = d3.scaleLinear()
+      .domain([d3.min(time), d3.max(time)])
+      .range([marginLeft, width - marginRight]);
 
-    // // Reinitialize scales when data changes
-    // afterUptime(() => {
-    //     initializeScales();
-    //     // Uptime the 'data' array based on 'time' and 'signal'
-    //     data = time.map((t, index) => ({ time: t, signal: signal[index] }));
-    // });
+    yScale = d3.scaleLinear()
+      .domain([d3.min(signal) - 5, d3.max(signal) + 5])
+      .range([height - marginBottom, marginTop]);
+  }
 
-  
-    const line = d3
-      .line()
-      .x((d) => xScale(d.time))
-      .y((d) => yScale(d.signal));
-  
-    function showTooltip(event) {
-      const [x, y] = d3.pointer(event);
-      const nearestDataPoint = findNearestDataPoint(x, y);
-  
-      // Add null check before accessing properties
-      if (nearestDataPoint) {
-        tooltip = {
-          visible: true,
-          x: x,
-          y: y,
-          content: `${nearestDataPoint.signal.toFixed(2)}`,
-        };
-      }
+  // Initialize scales when component is created or when data changes
+  $: {
+    initializeScales();
+  }
+
+  const line = d3
+    .line()
+    .x((d) => xScale(d.time))
+    .y((d) => yScale(d.signal));
+
+  function showTooltip(event) {
+    const [x, y] = d3.pointer(event);
+    const nearestDataPoint = findNearestDataPoint(x, y);
+
+    // Add null check before accessing properties
+    if (nearestDataPoint) {
+      tooltip = {
+        visible: true,
+        x: x,
+        y: y,
+        content: `${nearestDataPoint.signal.toFixed(2)}`,
+      };
     }
-  
-    function hideTooltip() {
-      tooltip = null;
-    }
-  
-    function findNearestDataPoint(x, y) {
-      let minDistance = 5;
-      let nearestDataPoint = null;
-  
+  }
+
+  function hideTooltip() {
+    tooltip = null;
+  }
+
+  function findNearestDataPoint(x, y) {
+    let minDistance = 5;
+    let nearestDataPoint = null;
+
+    dataStoreSignal.subscribe(data => {
       data.forEach((d) => {
         const xPos = xScale(d.time);
         const yPos = yScale(d.signal);
         const distance = Math.sqrt((x - xPos) ** 2 + (y - yPos) ** 2);
-  
+
         if (distance < minDistance) {
           minDistance = distance;
           nearestDataPoint = d;
         }
       });
-  
-      return nearestDataPoint;
-    }
-  </script>
-  
+    });
+
+    return nearestDataPoint;
+  }
+</script>
+
+<main>
+
   <svg
     {width}
     {height}
@@ -103,7 +114,7 @@
     <!-- X-Axis -->
     <g transform={`translate(0,${height - marginBottom})`}>
       <line stroke="currentColor" x1={marginLeft - 6} x2={width} />
-  
+
       {#each xScale.ticks() as tick}
         <line
           stroke="currentColor"
@@ -112,13 +123,13 @@
           y1={0}
           y2={6}
         />
-  
+
         <text fill="currentColor" text-anchor="middle" x={xScale(tick)} y={22}>
           {tick.toFixed(2)}
         </text>
       {/each}
     </g>
-  
+
     <!-- Y-Axis and Grid Lines -->
     <g transform={`translate(${marginLeft},0)`}>
       {#each yScale.ticks() as tick}
@@ -131,7 +142,7 @@
             y1={yScale(tick)}
             y2={yScale(tick)}
           />
-  
+
           <line
             stroke="currentColor"
             x1={0}
@@ -140,7 +151,7 @@
             y2={yScale(tick)}
           />
         {/if}
-  
+
         <text
           fill="currentColor"
           text-anchor="end"
@@ -151,21 +162,21 @@
           {tick.toFixed(2)}
         </text>
       {/each}
-  
+
       <text fill="currentColor" text-anchor="start" x={-marginLeft} y={15}>
         ↑ Signal Values
       </text>
     </g>
-  
+
     <!-- Line Path with Hover Effects -->
     <path
       fill="none"
       stroke="steelblue"
       stroke-width="2"
-      d={line(data)}
+      d={line($dataStoreSignal)}
       aria-hidden="true"
     />
-  
+
     <!-- Tooltip -->
     {#if tooltip}
       <g transform={`translate(${tooltip.x},${tooltip.y - 20})`} role="tooltip" aria-live="assertive">
@@ -174,9 +185,5 @@
       </g>
     {/if}
   </svg>
-  
-  <main>
-    
-    <p> {data[10].signal}</p>
-  </main>
+</main>
   

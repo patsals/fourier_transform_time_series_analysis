@@ -37,10 +37,11 @@
         {#if sectionIndex === 0}
           <Introduction />
         {:else if sectionIndex === 1}
-          <FFTSignalTransformer />
+          <Fftvisualizer />
           
         {:else if sectionIndex === 2}
-          <h1>hello</h1>
+          <!-- <FFTSignalTransformer /> -->
+          <h1>helo</h1>
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
