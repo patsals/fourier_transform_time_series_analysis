@@ -2,7 +2,6 @@
     import * as d3 from 'd3';
     export let dataStoreFFTMagnitudes;
     export let threshold;
-    console.log(threshold);
   
     let frequencies = [];
     let magnitudes = [];
