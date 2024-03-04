@@ -29,17 +29,19 @@
 // Function to initialize scales
 function initializeScales() {
   xScale = d3.scaleLinear()
-    .domain([d3.min(time), d3.max(time)/2])
+    .domain([d3.min(time), d3.max(time)])
     .range([marginLeft, width - marginRight]);
 
   yScale = d3.scaleLinear()
-    .domain([d3.min(signal), d3.max(signal) + 5])
+    .domain([d3.min(signal), d3.max(signal) + 1])
     .range([height - marginBottom, marginTop]);
 }
 
 // Initialize scales when component is created or when data changes
 $: {
-  initializeScales();
+    if (signal.length > 0) {
+        initializeScales();
+    }
 }
 
 const line = d3
@@ -57,7 +59,7 @@ function showTooltip(event) {
       visible: true,
       x: x,
       y: y,
-      content: `${nearestDataPoint.signal.toFixed(2)}`,
+      content: `${nearestDataPoint.time.toFixed(2)}, ${nearestDataPoint.signal.toFixed(2)}`,
     };
   }
 }

@@ -1,10 +1,8 @@
 <script>
   import Scroller from '@sveltejs/svelte-scroller';
   import Introduction from './Introduction.svelte';
-  import Temp from './Temp.svelte';
   import Fftvisualizer from './fftvisualizer.svelte';
-  import data from "./data.json";
-  import FFTSignalTransformer from './FFTSignalTransformer.svelte';
+  import FftDataAnalysis from './FFTDataAnalysis.svelte';
 
 
   let count, index, fadeIn;
@@ -40,8 +38,8 @@
           <Fftvisualizer />
           
         {:else if sectionIndex === 2}
-          <!-- <FFTSignalTransformer /> -->
-          <h1>helo</h1>
+          <FftDataAnalysis />
+          <p> 1</p>
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>
