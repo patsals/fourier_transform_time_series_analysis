@@ -1,25 +1,36 @@
 <script>
   import * as d3 from 'd3';
   export let dataStoreFFTMagnitudes;
-
+  export let dataStoreWaves;
+  export let dataStoreWaveComponents;
 
   let time = [];
   let signal = [];
+  let waves = [];
+  let waveComponents = [];
 
   dataStoreFFTMagnitudes.subscribe(data => {
-      // Update local time and signal arrays
       time = data.map(d => d.time);
       signal = data.map(d => d.signal);
 
-});
+  });
+
+  dataStoreWaves.subscribe(data => {
+        waves = data.map(d => d);
+    });
   
+    dataStoreWaveComponents.subscribe(data => {
+      waveComponents = data.map(d => d);
+  });
+  
+
   // Define width, height, etc.
-  let width = 928;
+  let width = 900;
   let height = 500;
   let marginTop = 20;
-  let marginRight = 30;
+  let marginRight = 80;
   let marginBottom = 30;
-  let marginLeft = 40;
+  let marginLeft = 80;
 
   let xScale;
   let yScale;
@@ -87,6 +98,8 @@ function findNearestDataPoint(x, y) {
 
   return nearestDataPoint;
 }
+
+
 </script>
 
 <main>
@@ -103,7 +116,7 @@ function findNearestDataPoint(x, y) {
 >
   <!-- X-Axis -->
   <g transform={`translate(0,${height - marginBottom})`}>
-    <line stroke="currentColor" x1={marginLeft - 6} x2={width} />
+    <line stroke="currentColor" x1={marginLeft - 6} x2={width}/>
 
     {#each xScale.ticks() as tick}
       <line
@@ -165,7 +178,9 @@ function findNearestDataPoint(x, y) {
     stroke-width="2"
     d={line($dataStoreFFTMagnitudes)}
     aria-hidden="true"
-  />
+    >
+ 
+  </path>
 
   <!-- Tooltip -->
   {#if tooltip}
@@ -174,5 +189,28 @@ function findNearestDataPoint(x, y) {
       <text x="10" y="15" fill="steelblue">{tooltip.content}</text>
     </g>
   {/if}
+
+  <!-- Display waves and arrows -->
+  {#each waveComponents as wc, index }
+    <text y={index * 20 + 50} x={width - 200} fill="currentColor">
+      {wc[1] + wc[0] + ' freq:' +wc[2]}
+    </text>
+
+    {#if waveComponents[index]}
+      <line
+        x1={width - 200}
+        y1={index * 20 + 50}
+        x2={xScale(wc[2])}
+        y2={yScale(wc[1])}
+        stroke="red"
+        marker-end="url(#arrowhead)"
+        stroke-dasharray="5 5"
+        >
+
+  </line>
+    {/if}
+  {/each}
+
+
 </svg>
 </main>

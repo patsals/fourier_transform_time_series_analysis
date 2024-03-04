@@ -14,7 +14,6 @@
 
     const n = voltages.length;
     const FFTresult = fft.fft(voltages);
-    const magnitudes = FFTresult.map((value) => Math.sqrt(value[0] ** 2 + value[1] ** 2)/n);
 
     const frequencies = [];
     for (let i = 0; i < n; i ++){
@@ -31,16 +30,16 @@
 
     const PSD_real = PSD.map(d => d.real/n)
 
+    let threshold_input = 500;
+    let threshold = writable();
     
-    let threshold = 100;
-    
-
     let dataStoreFFTMagnitudes = writable([]);
     let dataStoreIFFT = writable([]);
 
 
     $: {
-        const FFTresult_thresholded = PSD_real.map((power, index) => power > threshold ? FFTresult[index] : [0, 0])
+        threshold.set(threshold_input);
+        const FFTresult_thresholded = PSD_real.map((power, index) => power > threshold_input ? FFTresult[index] : [0, 0])
         const IFFTresult = fft.ifft(FFTresult_thresholded);
 
         dataStoreFFTMagnitudes.set(frequencies.slice(0, PSD_real.length / 2).map((t, index) => ({ frequency: t, magnitude: 2*PSD_real[index] })));
@@ -54,11 +53,11 @@
 
 <main>
     <PlotElectric1 {electricData1} />
-    <PlotElectricFft {dataStoreFFTMagnitudes} />
+    <PlotElectricFft {dataStoreFFTMagnitudes} {threshold}/>
     <PlotElectric2 {dataStoreIFFT} />
     <label>
         Threshold Slider:
-        <input type="range" min="0" max="1000" step="1" bind:value={threshold} />
-        {threshold}
+        <input type="range" min="0" max="{2500}" step="1" bind:value={threshold_input} />
+        {threshold_input}
     </label>
 </main>

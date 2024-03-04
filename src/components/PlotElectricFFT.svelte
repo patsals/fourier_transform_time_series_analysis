@@ -1,18 +1,22 @@
 <script>
     import * as d3 from 'd3';
     export let dataStoreFFTMagnitudes;
-  
+    export let threshold;
+    console.log(threshold);
   
     let frequencies = [];
     let magnitudes = [];
-  
+    let threshold_level = 100;
+
     dataStoreFFTMagnitudes.subscribe(data => {
         // Update local time and signal arrays
         frequencies = data.map(d => d.frequency);
         magnitudes = data.map(d => d.magnitude);
   
   });
-    
+
+    threshold.subscribe(d => threshold_level = d);
+        
     // Define width, height, etc.
     let width = 900;
     let height = 300;
@@ -175,5 +179,18 @@
         <text x="10" y="15" fill="steelblue">{tooltip.content}</text>
       </g>
     {/if}
+
+    <line
+      stroke="red"
+      stroke-opacity="0.5"
+      stroke-width="4"
+      x1={marginLeft}
+      x2={width - marginLeft}
+      y1={yScale(threshold_level)}
+      y2={yScale(threshold_level)}
+      marker-end="url(#arrowhead)"
+      stroke-dasharray="5 5"
+    />
+
   </svg>
   </main>

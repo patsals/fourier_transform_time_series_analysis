@@ -39,7 +39,6 @@
           
         {:else if sectionIndex === 2}
           <FftDataAnalysis />
-          <p> 1</p>
         {:else if sectionIndex === 3}
         <div>
           <h1>Section {sectionIndex + 1}</h1>

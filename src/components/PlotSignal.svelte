@@ -16,12 +16,12 @@
 });
   
   // Define width, height, etc.
-  let width = 928;
+  let width = 900;
   let height = 500;
   let marginTop = 20;
-  let marginRight = 30;
+  let marginRight = 80;
   let marginBottom = 30;
-  let marginLeft = 40;
+  let marginLeft = 80;
 
   let xScale;
   let yScale;
@@ -166,7 +166,17 @@ function findNearestDataPoint(x, y) {
     stroke-width="2"
     d={line($dataStoreSignal)}
     aria-hidden="true"
-  />
+    stroke-dasharray="50000"
+    stroke-dashoffset="50000"
+    >
+    <animate
+      attributeName="stroke-dashoffset"
+      dur="5s" 
+      values="50000;0"  
+      repeatCount="indefinite"
+    />
+
+  </path>
 
   <!-- Tooltip -->
   {#if tooltip}

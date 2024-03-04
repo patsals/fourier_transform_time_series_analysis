@@ -1,19 +1,6 @@
 <script>
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
-
-/* Styling for the introduction section */
-div h1 {
-    font-family: 'Merriweather', serif;
-    font-size: 160%;
-}
-div p {
-    font-family: 'Merriweather', serif;
-    font-size: 100%;
-}
-</style>
 
 <main>
 <div>

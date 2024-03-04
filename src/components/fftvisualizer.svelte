@@ -32,7 +32,8 @@
     let magnitudes = [];
     let FFTresult = [];
     
-    let waves = ['cos(2 * pi * 1 * x)'];
+    let waves = ['1cos(1(x-h))'];
+    let waveComponents = [['cos', 1, 1, 0, 0]];
   
     // initialize our time array
     for (let i = 0; i <= numPoints; i++) {
@@ -69,7 +70,7 @@
     function increment() {
       if (counter < numSignals) {
         counter += 1;
-        let sin_or_cos = Math.random();
+        let wave_type = Math.random() > 0.5 ? 'cos' : 'sin';
         let amp = Math.random() * 3;
         let v_shift = Math.random() * 0;
         let h_shift = Math.random();
@@ -77,7 +78,7 @@
         let wave_added = '';
         for (let i = 0; i < signalComponents.length; i++) {
           let x = i * interval;
-          if (sin_or_cos > 0.5) {
+          if (wave_type === 'cos') {
             //signalComponents[i][counter - 1] = amp * Math.cos(ang_freq * (x - h_shift)) + v_shift;
             signalComponents[i][counter - 1] = amp * Math.cos( 2 * Math.PI * ang_freq * (x - h_shift)) + v_shift;
 
@@ -90,7 +91,9 @@
           }
         }
         waves.push(wave_added);
-        console.log(waves);
+        waveComponents.push([wave_type, amp.toFixed(1), ang_freq.toFixed(1), h_shift.toFixed(1), v_shift.toFixed(1)]);
+
+        //console.log(waves);
         //console.log(wave_added);
         updateSignal();
       } else {
@@ -106,6 +109,7 @@
         counter -= 1;
         updateSignal();
         waves.pop();
+        waveComponents.pop();
       } else {
         console.log('At least 1 wave must be present');
       }
@@ -115,11 +119,15 @@
     // Create a writable store to hold the data
   let dataStoreSignal = writable([]); 
   let dataStoreFFTMagnitudes = writable([]);
+  let dataStoreWaves = writable([]);
+  let dataStoreWaveComponents = writable([]);
 
   $: {
     // Recreate the data array whenever signal or time changes
     dataStoreSignal.set(time.map((t, index) => ({ time: t, signal: signal[index] })));
     dataStoreFFTMagnitudes.set(frequency.slice(0, frequency.length / 2).map((t, index) => ({ time: t*10, signal: 2*magnitudes[index] })));
+    dataStoreWaves.set(waves);
+    dataStoreWaveComponents.set(waveComponents);
   }
 
   </script>
@@ -129,7 +137,7 @@
     <p>Number of Random Cosine Waves: {counter}<button on:click={increment}>+</button><button on:click={decrement}>-</button></p>
     <PlotSignal {dataStoreSignal}/>
     <h2>Frequency Domain</h2>
-    <PlotFrequencyDomain {dataStoreFFTMagnitudes}/>
+    <PlotFrequencyDomain {dataStoreFFTMagnitudes} {dataStoreWaves} {dataStoreWaveComponents}/>
     <p>{waves}</p>
   </main>
   
