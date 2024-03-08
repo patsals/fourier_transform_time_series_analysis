@@ -1,5 +1,5 @@
 <script>
-    
+    import { base } from '$app/paths'
 </script>
 
 
@@ -15,10 +15,10 @@
 
 <h1>A Streamlined Introduction to the Fast Fourier Transform</h1>
 <h3>At its core, the Fourier Transform breaks down a signal or a function into its constituent frequencies, revealing underlying spectral information.</h3>
-<img src="/src/FFT.png" alt="something" style="width: 50%; height: 50%;">
+<img src={base + "/src/FFT.png"} alt="something" style="width: 50%; height: 50%;">
 <h3>When represented mathematically, it comes primarily in two forms,</h3>
 <h4>The Continuous Fourier Transform:</h4>
-<img src="/src/continuous_FFT.png" alt="something" style="width: 30%; height: 30%;">
+<img src={base + "/src/continuous_FFT.png"} alt="something" style="width: 30%; height: 30%;">
 <h4>The Discrete Fourier Transform:</h4>
-<img src="/src/discrete_FFT.png" alt="something" style="width: 25%; height: 25%;">
+<img src={base + "/src/discrete_FFT.png"} alt="something" style="width: 25%; height: 25%;">
 </main>
