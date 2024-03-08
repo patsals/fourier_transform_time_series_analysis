@@ -132,12 +132,20 @@
 
   </script>
   
-  <main>
-    <h2>Signal: </h2>
-    <p>Number of Random Cosine Waves: {counter}<button on:click={increment}>+</button><button on:click={decrement}>-</button></p>
-    <PlotSignal {dataStoreSignal}/>
-    <h2>Frequency Domain</h2>
-    <PlotFrequencyDomain {dataStoreFFTMagnitudes} {dataStoreWaves} {dataStoreWaveComponents}/>
-    <p>{waves}</p>
-  </main>
-  
+<main>
+  <h2>The Fast Fourier Transform</h2>
+  <h3>Which now allows us to compute the Fourier Transform at 300x its original speed, making us capable of understanding the different frequencies of a wave in real-time:</h3>
+
+  <div style="display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; margin-right: 20px;">
+        <h2>Signal: </h2>
+        <PlotSignal {dataStoreSignal}/>
+    </div>
+    <div style="flex: 1;">
+        <h2>Frequency Domain</h2>
+        <PlotFrequencyDomain {dataStoreFFTMagnitudes} {dataStoreWaves} {dataStoreWaveComponents}/>
+    </div>
+  </div>
+  <h4>Number of Random Waves: {counter}<button on:click={increment}>+</button><button on:click={decrement}>-</button></h4>
+  <h3>We can see that as we add more waves, their corresponding wave components are displayed within the spectral domain, with their frequency on the horizontal axis and their amplitude on the vertical axis.</h3>
+</main>

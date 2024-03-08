@@ -52,12 +52,18 @@
 
 
 <main>
+    <h2>Let's consider real-world data</h2>
+
+    <h3>Voltage readings sampled from a US household in February of 2023:</h3>
     <PlotElectric1 {electricData1} />
+    <h3>If we compute the power spectrum of this data, which is obtained by taking the squared magnitude of the Fourier Transform, we can get the following:</h3>
     <PlotElectricFft {dataStoreFFTMagnitudes} {threshold}/>
-    <PlotElectric2 {dataStoreIFFT} />
-    <label>
+    <h4>
         Threshold Slider:
         <input type="range" min="0" max="{2500}" step="1" bind:value={threshold_input} />
         {threshold_input}
-    </label>
+    </h4>
+    <h3>Now we can apply thresholding to the different magnitudes, and perform the Inverse Fourier Transform to obtain a denoisified version of the data:</h3>
+    <PlotElectric2 {dataStoreIFFT} />
+    
 </main>
