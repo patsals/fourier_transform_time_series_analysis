@@ -97,7 +97,7 @@
   let width = 928;
   let height = 500;
   let marginTop = 20;
-  let marginRight = 30;
+  let marginRight = 0;
   let marginBottom = 30;
   let marginLeft = 40;
 

@@ -19,7 +19,7 @@
   let width = 900;
   let height = 500;
   let marginTop = 20;
-  let marginRight = 80;
+  let marginRight = 10;
   let marginBottom = 30;
   let marginLeft = 80;
 
@@ -70,7 +70,7 @@ function hideTooltip() {
 }
 
 function findNearestDataPoint(x, y) {
-  let minDistance = 5;
+  let minDistance = 20;
   let nearestDataPoint = null;
 
   dataStoreSignal.subscribe(data => {
@@ -155,7 +155,10 @@ function findNearestDataPoint(x, y) {
     {/each}
 
     <text fill="currentColor" text-anchor="start" x={-marginLeft} y={15}>
-      ↑ Signal Values
+      ↑ Signal
+    </text>
+    <text fill="currentColor" text-anchor="start" x={width-150} y={height-40}>
+      time →
     </text>
   </g>
 

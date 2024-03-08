@@ -20,7 +20,7 @@
     let width = 900;
     let height = 300;
     let marginTop = 30;
-    let marginRight = 80;
+    let marginRight = 15;
     let marginBottom = 30;
     let marginLeft = 80;
   
@@ -33,7 +33,7 @@
   function initializeScales() {
     xScale = d3.scaleLinear()
         //.domain([d3.min(frequencies), d3.max(frequencies)])
-      .domain([-0.01, 0.5])
+      .domain([-0.01, 0.15])
       .range([marginLeft, width - marginRight]);
   
     yScale = d3.scaleLinear()
@@ -73,7 +73,7 @@
   }
   
   function findNearestDataPoint(x, y) {
-    let minDistance = 5;
+    let minDistance = 20;
     let nearestDataPoint = null;
   
     dataStoreFFTMagnitudes.subscribe(data => {
@@ -158,7 +158,10 @@
       {/each}
   
       <text fill="currentColor" text-anchor="start" x={-marginLeft} y={15}>
-        ↑ Signal Values
+        ↑ Magnitude
+      </text>
+      <text fill="currentColor" text-anchor="start" x={width-200} y={height-40}>
+        Frequencies →
       </text>
     </g>
   
@@ -174,7 +177,7 @@
     <!-- Tooltip -->
     {#if tooltip}
       <g transform={`translate(${tooltip.x},${tooltip.y - 20})`} role="tooltip" aria-live="assertive">
-        <rect width="100" height="40" fill="white" stroke="steelblue" stroke-width="1" />
+        <rect width="120" height="20" fill="white" stroke="steelblue" stroke-width="1" />
         <text x="10" y="15" fill="steelblue">{tooltip.content}</text>
       </g>
     {/if}
@@ -190,6 +193,10 @@
       marker-end="url(#arrowhead)"
       stroke-dasharray="5 5"
     />
+
+    <text y={10} x={width - 200} fill="currentColor" style="font-size: 14px;  color: #333;">
+      {"note: entire axis is not displayed"}
+    </text>
 
   </svg>
   </main>

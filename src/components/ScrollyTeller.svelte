@@ -36,7 +36,7 @@
           <Introduction />
         {:else if sectionIndex === 1}
           <h1> </h1>
-          <h3> but it turns out, that both computations can quickly become computationally inefficient...</h3>
+          <h3> but it turns out, both computations can quickly become computationally inefficient...</h3>
           <h3>However, thanks to advancements in science, a much more efficient way of computing these equations has been discovered!</h3>
           <h1> </h1>
         {:else if sectionIndex === 2}
@@ -47,6 +47,8 @@
           <h1> </h1>
         {:else if sectionIndex === 4}
           <FftDataAnalysis />
+          <h1> </h1>
+
         {:else if sectionIndex === 4}
 
         <div>

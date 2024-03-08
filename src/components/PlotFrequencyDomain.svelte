@@ -28,7 +28,7 @@
   let width = 900;
   let height = 500;
   let marginTop = 20;
-  let marginRight = 80;
+  let marginRight = 10;
   let marginBottom = 30;
   let marginLeft = 80;
 
@@ -80,7 +80,7 @@ function hideTooltip() {
 }
 
 function findNearestDataPoint(x, y) {
-  let minDistance = 5;
+  let minDistance = 20;
   let nearestDataPoint = null;
 
   dataStoreFFTMagnitudes.subscribe(data => {
@@ -167,7 +167,10 @@ function findNearestDataPoint(x, y) {
     {/each}
 
     <text fill="currentColor" text-anchor="start" x={-marginLeft} y={15}>
-      ↑ Signal Values
+      ↑ Signal Amplitudes
+    </text>
+    <text fill="currentColor" text-anchor="start" x={width-250} y={height-40}>
+      Signal Frequencies →
     </text>
   </g>
 
@@ -191,14 +194,17 @@ function findNearestDataPoint(x, y) {
   {/if}
 
   <!-- Display waves and arrows -->
+  <text fill="currentColor" text-anchor="start" x={width-200} y={30} style="text-decoration: underline; font-weight: bold;">
+    Added waves:
+  </text>
   {#each waveComponents as wc, index }
-    <text y={index * 20 + 50} x={width - 200} fill="currentColor">
-      {wc[1] + wc[0] + ' freq:' +wc[2]}
+    <text y={index * 20 + 50} x={width - 230} fill="currentColor">
+      {wc[0] + ' wave with amp:' + wc[1] + '; freq:' + wc[2]}
     </text>
 
     {#if waveComponents[index]}
       <line
-        x1={width - 200}
+        x1={width - 230}
         y1={index * 20 + 50}
         x2={xScale(wc[2])}
         y2={yScale(wc[1])}
