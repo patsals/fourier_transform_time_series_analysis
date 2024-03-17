@@ -14,7 +14,7 @@
 <p>Discrete Fourier Transform: F<sub>&#x1d458</sub> = &Sigma;<sub>0</sub><sup>&#x1D45B;&minus;1</sup>&#x1d465;<sub>&#x1D45B;</sub>&#x1D452<sup><sup>-&#x1D457;2&pi;&#x1D458;&#x1D45B</sup>&frasl;<sub>N</sub></sup></p> -->
 
 <h1>A Streamlined Introduction to the Fast Fourier Transform</h1>
-<h3>Curious about how images are compressed, signals are filtered, and data is analyzed in diverse fields like telecommunications, image processing, and audio engineering?</h3>
+<h3 style="padding: 50px;">Curious about how images are compressed, signals are filtered, and data is analyzed in diverse fields like telecommunications, image processing, and audio engineering?</h3>
 
 <!-- <img src={"/src/continuous_FFT.png"} alt="something" style="width: 30%; height: 30%;"> -->
 <!-- <h4>The Discrete Fourier Transform:</h4> -->
